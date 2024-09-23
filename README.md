@@ -31,3 +31,12 @@ docker run --rm \
 ### Executando os testes
 
 ./vendor/bin/sail php artisan test
+
+
+### Recursos
+
+/api/product
+/api/order
+/api/customer
+
+```
