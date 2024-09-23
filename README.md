@@ -22,15 +22,12 @@ docker run --rm \
 
 ### Executando o sail
 
-```bash
 ./vendor/bin/sail up
 
 ### Executando migrations e seeds
 
-```bash
 ./vendor/bin/sail php artisan migrate --seed
 
 ### Executando os testes
 
-```bash
 ./vendor/bin/sail php artisan test
