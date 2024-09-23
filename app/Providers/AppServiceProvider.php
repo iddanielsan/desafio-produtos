@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Contracts\NotificationServiceContract;
+use App\Contracts\OrderServiceContract;
 use App\Contracts\ProductServiceContract;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Models\Order;
 use App\Models\Product;
@@ -27,6 +29,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(ProductService::class)
             ->needs(Model::class)
             ->give(Product::class);
+
+        $this->app->when(OrderController::class)
+            ->needs(OrderServiceContract::class)
+            ->give(OrderService::class);
+
+        $this->app->when(OrderService::class)
+            ->needs(Model::class)
+            ->give(Order::class);
     }
 
     /**
