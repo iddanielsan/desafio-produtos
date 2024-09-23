@@ -2,6 +2,15 @@
 
 namespace App\Providers;
 
+use App\Contracts\NotificationServiceContract;
+use App\Contracts\ProductServiceContract;
+use App\Http\Controllers\ProductController;
+use App\Models\Order;
+use App\Models\Product;
+use App\Services\NotificationService;
+use App\Services\OrderService;
+use App\Services\ProductService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +20,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->when(ProductController::class)
+            ->needs(ProductServiceContract::class)
+            ->give(ProductService::class);
+
+        $this->app->when(ProductService::class)
+            ->needs(Model::class)
+            ->give(Product::class);
     }
 
     /**
