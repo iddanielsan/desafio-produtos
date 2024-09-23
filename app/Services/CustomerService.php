@@ -15,7 +15,7 @@ class CustomerService implements CustomerServiceContract {
 
     public function createCustomer(array $data): Customer
     {
-        $user = User::create($data['user']);
+        $user = $this->customerModel->user()->create($data['user']);
 
         return $this->customerModel->create([
             'user_id' => $user->id,
@@ -46,7 +46,7 @@ class CustomerService implements CustomerServiceContract {
 
     public function getAllCustomers(): Collection
     {
-        return $this->customerModel->all();
+        return $this->customerModel->query()->get();
     }
 
     public function deleteCustomer(Customer $customer): bool

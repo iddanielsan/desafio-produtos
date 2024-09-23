@@ -10,6 +10,11 @@ use PHPUnit\Framework\TestCase;
 
 class ProductServiceTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        Mockery::close();
+    }
+
     public function test_get_all_products_with_filters()
     {
         $productModel = Mockery::mock(Product::class);
