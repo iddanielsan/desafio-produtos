@@ -22,10 +22,6 @@ class UpdateCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "user" => ["required", "array"],
-            "user.name" => ["required", "string"],
-            "user.email" => ["required", "email", "unique:users,email," . $this->customer->user->id],
-            "user.password" => ["required", "string"],
             "date_of_birth" => ["required", "date"],
             "address" => ["required", "string"],
             "complement" => ["nullable", "string"],

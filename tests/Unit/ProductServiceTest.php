@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Models\Product;
 use App\Services\ProductService;
-use Database\Factories\ProductFactory;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 

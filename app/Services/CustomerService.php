@@ -15,6 +15,10 @@ class CustomerService implements CustomerServiceContract {
 
     public function createCustomer(array $data): Customer
     {
+        if (!isset($data['user'])) {
+            throw new \InvalidArgumentException('User data is required');
+        }
+
         $user = $this->customerModel->user()->create($data['user']);
 
         return $this->customerModel->create([
@@ -30,17 +34,7 @@ class CustomerService implements CustomerServiceContract {
 
     public function updateCustomer(Customer $customer, array $data): Customer
     {
-        $customer->user->update($data['user']);
-
-        $customer->update([
-            'date_of_birth' => $data['date_of_birth'],
-            'address' => $data['address'],
-            'complement' => $data['complement'],
-            'city' => $data['city'],
-            'state' => $data['state'],
-            'zip' => $data['zip'],
-        ]);
-
+        $customer->update($data);
         return $customer;
     }
 
