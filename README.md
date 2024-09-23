@@ -35,8 +35,8 @@ docker run --rm \
 
 ### Recursos
 
-/api/product
-/api/order
-/api/customer
+[GET, POST, PUT] /api/product
+[GET, POST, PUT] /api/order
+[GET, POST, PUT] /api/customer
 
 ```
