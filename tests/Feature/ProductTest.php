@@ -13,6 +13,11 @@ class ProductTest extends TestCase
     public function test_create_product()
     {
         $response = $this->postJson('/api/product', Product::factory()->make()->toArray());
+
+        $this->assertDatabaseHas('products', [
+            'id' => $response->json()['id']
+        ]);
+
         $response->assertStatus(201);
     }
 
@@ -47,7 +52,15 @@ class ProductTest extends TestCase
     {
         $product = Product::factory()->create();
 
-        $response = $this->putJson("/api/product/{$product->id}", Product::factory()->make()->toArray());
+        $response = $this->putJson("/api/product/{$product->id}", Product::factory()->make([
+            'name' => 'Updated Product'
+        ])->toArray());
+
+        $this->assertDatabaseHas('products', [
+            'id' => $product->id,
+            'name' => 'Updated Product'
+        ]);
+
         $response->assertStatus(200);
     }
 

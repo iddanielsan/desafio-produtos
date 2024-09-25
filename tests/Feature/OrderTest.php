@@ -5,8 +5,11 @@ namespace Tests\Feature;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
+use App\Notifications\OrderCreated;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class OrderTest extends TestCase
@@ -50,6 +53,8 @@ class OrderTest extends TestCase
         $products = Product::factory()->count(3)->create();
         $customer = Customer::factory()->create();
 
+        Notification::fake();
+
         $response = $this->post('/api/order', [
             'customer_id' => $customer->id,
             'products' => $products->map(function ($product) {
@@ -59,6 +64,14 @@ class OrderTest extends TestCase
                 ];
             })->toArray(),
         ]);
+
+        $this->assertDatabaseHas('orders', [
+            'id' => $response->json()['id']
+        ]);
+
+        Notification::assertSentTo(
+            [$customer->user], OrderCreated::class
+        );
 
         $response->assertStatus(201);
     }
